@@ -1,7 +1,7 @@
 import {useState, useEffect} from "react";
 import axios from 'axios';
 import { jwtDecode } from 'jwt-decode';
-
+import { API_BASE_URL } from './config';
 
 function App() {
     const [user, setUser] = useState({});
@@ -56,7 +56,7 @@ function App() {
 
         axios({
             method: 'post',
-            url:'/postData',
+            url:`${API_BASE_URL}/postData`,
             data:{
                 name: newName,
                 email: newEmail,
@@ -85,7 +85,7 @@ function App() {
     const deleteCustomer = (e, id) => {
         e.preventDefault();
 
-        axios.delete('/delete/' + id)
+        axios.delete(`${API_BASE_URL}/delete/` + id)
             .then((res, err) => {
                 console.log(res)
         })
@@ -102,7 +102,7 @@ function App() {
 
     const handleEditSubmit = (e) => {
         e.preventDefault();
-        axios.put('/update/' + id, {name, email})
+        axios.put(`${API_BASE_URL}/update/` + id, {name, email})
             .then((res, err) => {
                 if(res.data) {
                     console.log('updated')
@@ -128,7 +128,7 @@ function App() {
         setNoResultFound(false);
     }
     function getCustomers() {
-        fetch('/fetchData')
+        fetch(`${API_BASE_URL}/fetchData`)
             .then(response => response.json())
             // .then(data => console.log(data))
             .then(data => {
